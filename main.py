@@ -12,8 +12,17 @@ class MainGui:
     def onDeleteWindow(self, *args):
         Gtk.main_quit(*args)
 
-    def onChooseIcon(self, widget):
-        print "Hello World"
+    def newFile(self, widget):
+        entries = {
+            "entry_name", "entry_command", "entry_icon", "entry_type"
+        }
+        #self.builder.get_object("entry_name").set_text('')
+        for entry in entries:
+            self.builder.get_object(entry).set_text('')
+        
+
+    def saveFile(self, widget):
+        print "Yet to implement"
         
 window = MainGui()
 Gtk.main()
