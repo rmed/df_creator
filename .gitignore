@@ -1,0 +1,7 @@
+# Python bytecode #
+###################
+*.pyc
+
+# Backup files #
+################
+*.bak
