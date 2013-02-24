@@ -1,26 +1,49 @@
 #!/usr/bin/python
 
-def get_basic(window):
-    # Get values from GUI fields
-    name = window.builder.get_object("entry_name").get_text()
-    execute = window.builder.get_object("entry_exec").get_text()
-    icon = window.builder.get_object("entry_icon").get_text()
+class GUIValues():
+    def __init__(self, window):
+        # Fields in 'Basic' tab
+        self.name = self.get_field(window, "entry_name")
+        self.execute = self.get_field(window, "entry_exec")
+        self.icon = self.get_field(window, "entry_icon")
+        self.typeindex = self.get_type(window)
+        self.category = self.get_combo(window, "cbox_category")
+        self.useterm = self.get_switch(window, "switch_terminal")
+        self.url = self.get_field(window, "entry_url")
 
-    # Get the value of the selected element of the type box
-    type_index = window.builder.get_object("cbox_type").get_active()
-    type_model = window.builderget_object("cbox_type").get_model()
-    apptype = type_model[type_index][0]
+        # Fields in 'Advanced' tab
+        self.version = self.get_field(window, "entry_version")
+        self.genericname = self.get_field(window, "entry_generic_name")
+        self.nodisplay = self.get_switch(window, "switch_nodisplay")
+        self.comment = self.get_field(window, "entry_comment")
+        self.hidden = self.get_switch(window, "switch_hidden")
+        self.notshowin = self.get_field(window, "entry_notshowin")
+        self.tryexec = self.get_field(window, "entry_tryexec")
+        self.path = self.get_field(window, "entry_path")
+        self.mime = self.get_field(window, "entry_mime")
+        self.keywords = self.get_field(window, "entry_keywords")
+        self.notify = self.get_switch(window, "switch_notify")
+        self.wmclass = self.get_field(window, "entry_wmclass")
+        
+        
+    # Get the text of the fields
+    def get_field(self, window, entry):
+        return window.builder.get_object(entry).get_text()
 
-    # Get the value of the selected element of the categories box
-    category_index = window.builder.get_object("cbox_category").get_active()
-    category_model = window.builder.get_object("cbox_category").get_model()
-    category = category_model[category_index][0]
+    # Get the value of the switches
+    def get_switch(self, window, switch):
+        if window.builder.get_object(switch).get_active():
+            return "true"
+        else:
+            return "false"
 
-    # Uses terminal?
-    useterm = "false"
-    if window.builder.get_object("switch_terminal").get_active():
-        useterm = "true"
+    # Get the value of the combo boxes
+    def get_combo(self, window, combobox):
+        model = window.builder.get_object(combobox).get_model()
+        index = window.builder.get_object(combobox).get_active()
+        return model[index][0]
 
-    # Return basic contents for the file
-    contents = [name, execute, icon, apptype, useterm, category]
-    return contents
+    # Get the type of application to save
+    def get_type(self, window):
+        return window.builder.get_object("cbox_type").get_active()
+

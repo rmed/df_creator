@@ -23,7 +23,7 @@ class MainGui:
     # Clean all the fields and start from scratch
     def on_new_activate(self, widget):
         entries = {
-            "entry_name", "entry_exec", "entry_icon", "entry_url"
+            "entry_name", "entry_exec", "entry_icon", "entry_url", "entry_version", "entry_generic_name", "entry_comment", "entry_notshowin", "entry_tryexec", "entry_path", "entry_mime", "entry_keywords", "entry_wmclass"
         }
         for entry in entries:
             self.builder.get_object(entry).set_text('')
@@ -44,7 +44,7 @@ class MainGui:
         response = savedialog.run()
         # Call the save function
         if response == Gtk.ResponseType.OK:
-            save_file.save(self, savedialog.get_filename())
+            save_file.savedf(self, savedialog.get_filename())
 
         # Destroy dialog
         savedialog.destroy()
@@ -70,7 +70,7 @@ class MainGui:
             # Hide the URL box
             self.builder.get_object("box_url").set_visible(False)
 
-        # Chosen type is URL (2)
+        # Chosen type is Link (2)
         elif widget.get_active() == 1:
             # Show all possible widgets for this type (2)
             for box in type_directory_boxes:
